@@ -3,6 +3,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import db from './db/connection.js'
 import salesRoutes from './routes/sales.js'
+import customersRoutes from './routes/customers.js'
+import inventoryRoutes from './routes/inventory.js'
 dotenv.config()
 
 const app = express()
@@ -24,6 +26,8 @@ db.getConnection()
 
 // Routes
 app.use('/api/sales', salesRoutes)
+app.use('/api/customers', customersRoutes)
+app.use('/api/inventory', inventoryRoutes)
 
 app.get('/', (req, res) => {
   res.send('API is running...')
