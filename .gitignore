@@ -1,0 +1,37 @@
+# ─── LOG FILES ───
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ─── NODE MODULES ───
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# ─── BUILD OUTPUT ───
+dist/
+dist-ssr/
+client/dist/
+server/dist/
+
+# ─── ENV FILES ───
+*.env
+.env.local
+server/.env
+
+# ─── EDITOR / SYSTEM FILES ───
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vite/
+.cache/
