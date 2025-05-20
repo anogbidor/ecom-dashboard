@@ -4,7 +4,7 @@ import { getCustomers, getCustomerStatsByLocation } from '../controllers/custome
 const router = express.Router()
 
 router.get('/', getCustomers)
-router.get('/location', getCustomerStatsByLocation)
+router.get('/locations', getCustomerStatsByLocation)
 
 
 export default router

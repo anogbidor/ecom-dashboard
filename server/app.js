@@ -5,6 +5,7 @@ import db from './db/connection.js'
 import salesRoutes from './routes/sales.js'
 import customersRoutes from './routes/customers.js'
 import inventoryRoutes from './routes/inventory.js'
+import kpiRoutes from './routes/kpis.js'
 dotenv.config()
 
 const app = express()
@@ -28,6 +29,7 @@ db.getConnection()
 app.use('/api/sales', salesRoutes)
 app.use('/api/customers', customersRoutes)
 app.use('/api/inventory', inventoryRoutes)
+app.use('/api/kpis', kpiRoutes)
 
 app.get('/', (req, res) => {
   res.send('API is running...')
