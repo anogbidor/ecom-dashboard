@@ -97,7 +97,7 @@ Then visit http://localhost:5173
 *Low stock alert table
 *KPI metrics powered by live data
 
- 🧠 Coming Soon (Optional Enhancements)
+ 🧠 Coming Soon 
 *🔐 JWT-based authentication
 *🧾 Add product / add sale forms
 *📈 Export dashboard to CSV/PDF
