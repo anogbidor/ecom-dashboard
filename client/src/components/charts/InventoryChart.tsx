@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
-import type { ChartData } from 'chart.js'
+import type { ChartData, ChartOptions } from 'chart.js'
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
 
@@ -42,12 +42,50 @@ const InventoryChart = () => {
     fetchData()
   }, [])
 
+  const options: ChartOptions<'bar'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.raw} items`,
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#6B7280',
+          maxRotation: 45,
+          minRotation: 0,
+          font: { size: 12 },
+        },
+        grid: { display: false },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: '#6B7280',
+          font: { size: 12 },
+        },
+        grid: {
+          color: 'rgba(229, 231, 235, 0.5)',
+        },
+      },
+    },
+  }
+
   if (!chartData) return <p>Loading chart...</p>
 
   return (
-    <div className='bg-white p-4 rounded shadow'>
-      <h2 className='text-lg font-semibold mb-4'>Inventory Stock Levels</h2>
-      <Bar data={chartData} />
+    <div className='bg-white p-4 rounded shadow w-full'>
+      <h2 className='text-lg font-semibold mb-4'>📦 Inventory Stock Levels</h2>
+      <div className='h-[300px] sm:h-[400px] md:h-[500px]'>
+        <Bar data={chartData} options={options} />
+      </div>
     </div>
   )
 }

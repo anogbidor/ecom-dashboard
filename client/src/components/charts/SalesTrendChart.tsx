@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import type { ChartData } from 'chart.js'
+import type { ChartData, ChartOptions } from 'chart.js'
 
 ChartJS.register(
   LineElement,
@@ -22,6 +22,24 @@ ChartJS.register(
 
 const SalesTrendChart = () => {
   const [chartData, setChartData] = useState<ChartData<'line'> | null>(null)
+
+  const options: ChartOptions<'line'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          maxRotation: 45,
+          minRotation: 0,
+        },
+      },
+    },
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,9 +102,9 @@ const SalesTrendChart = () => {
   if (!chartData) return <p>Loading sales trends...</p>
 
   return (
-    <div className='bg-white p-4 rounded shadow'>
+    <div className='bg-white p-4 rounded shadow w-full h-[300px] sm:h-[400px] md:h-[500px]'>
       <h2 className='text-lg font-semibold mb-4'>📈 Sales Trends & Forecast</h2>
-      <Line data={chartData} />
+      <Line data={chartData} options={options} />
     </div>
   )
 }

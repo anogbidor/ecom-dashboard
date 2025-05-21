@@ -10,9 +10,8 @@ import {
   Legend,
   Title,
 } from 'chart.js'
-import type { ChartData } from 'chart.js'
+import type { ChartData, ChartOptions } from 'chart.js'
 
-// Register necessary Chart.js modules
 ChartJS.register(
   LineElement,
   PointElement,
@@ -39,7 +38,9 @@ const SalesChart = () => {
       const res = await fetch('/api/sales')
       const data: Sale[] = await res.json()
 
-      const labels = data.map((sale) => sale.sale_date)
+      const labels = data.map((sale) =>
+        new Date(sale.sale_date).toISOString().slice(0, 10)
+      )
       const totals = data.map((sale) => parseFloat(sale.total_price))
 
       const chartConfig: ChartData<'line'> = {
@@ -48,9 +49,11 @@ const SalesChart = () => {
           {
             label: 'Total Sales ($)',
             data: totals,
-            fill: false,
             borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
             tension: 0.3,
+            fill: true,
+            pointRadius: 3,
           },
         ],
       }
@@ -61,12 +64,45 @@ const SalesChart = () => {
     fetchData()
   }, [])
 
+  const options: ChartOptions<'line'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'top' },
+      tooltip: {
+        callbacks: {
+          label: (context) => `$${context.raw}`,
+        },
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#6B7280',
+          maxRotation: 45,
+          font: { size: 12 },
+        },
+        grid: { display: false },
+      },
+      y: {
+        beginAtZero: true,
+        ticks: {
+          color: '#6B7280',
+          font: { size: 12 },
+        },
+        grid: { color: 'rgba(229, 231, 235, 0.5)' },
+      },
+    },
+  }
+
   if (!chartData) return <p>Loading chart...</p>
 
   return (
-    <div className='bg-white rounded shadow p-4'>
-      <h2 className='text-lg font-semibold mb-4'>Sales Over Time</h2>
-      <Line data={chartData} />
+    <div className='bg-white rounded shadow p-4 w-full'>
+      <h2 className='text-lg font-semibold mb-4'>📈 Sales Over Time</h2>
+      <div className='h-[300px] sm:h-[400px] md:h-[500px]'>
+        <Line data={chartData} options={options} />
+      </div>
     </div>
   )
 }

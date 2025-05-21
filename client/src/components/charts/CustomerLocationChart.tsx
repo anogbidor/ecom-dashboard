@@ -9,7 +9,6 @@ import {
   Tooltip,
   Legend,
   Title,
- 
 } from 'chart.js'
 import type { ChartData } from 'chart.js'
 
@@ -103,24 +102,18 @@ const CustomerLocationChart = () => {
         displayColors: true,
         boxPadding: 4,
         callbacks: {
-          label: (context) => {
-            return `${context.raw} customers`
-          },
+          label: (context) => `${context.raw} customers`,
         },
       },
     },
     scales: {
       x: {
-        grid: {
-          display: false,
-        },
+        grid: { display: false },
         ticks: {
           color: '#6B7280',
           maxRotation: 45,
           minRotation: 0,
-          font: {
-            size: 12,
-          },
+          font: { size: 12 },
         },
       },
       y: {
@@ -128,16 +121,10 @@ const CustomerLocationChart = () => {
         ticks: {
           color: '#6B7280',
           precision: 0,
-          font: {
-            size: 12,
-          },
+          font: { size: 12 },
         },
-        grid: {
-          color: 'rgba(229, 231, 235, 0.5)',
-        },
-        border: {
-          dash: [4, 4],
-        },
+        grid: { color: 'rgba(229, 231, 235, 0.5)' },
+        border: { dash: [4, 4] },
       },
     },
   }
@@ -186,8 +173,8 @@ const CustomerLocationChart = () => {
   }
 
   return (
-    <div className='bg-white p-6 rounded-lg shadow-sm border border-gray-100'>
-      <div className='h-96'>
+    <div className='bg-white p-6 rounded-lg shadow-sm border border-gray-100 w-full'>
+      <div className='h-[300px] sm:h-[400px] md:h-[500px]'>
         <Bar
           data={chartData}
           options={chartOptions}
