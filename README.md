@@ -19,6 +19,7 @@ A modern, interactive analytics dashboard for e-commerce businesses. Built with 
 
 ## 📁 Project Structure
 
+```bash
 e-commerce-dashboard/
 ├── client/                   # React + Vite frontend
 │   ├── public/
