@@ -7,7 +7,6 @@ const Sales = () => {
     <DashboardLayout>
       <h2 className='text-xl font-semibold mb-4'>Sales Overview</h2>
       <SalesChart />
-      {/* You can later add a sales table or filter here */}
       <SalesTable />
     </DashboardLayout>
   )
