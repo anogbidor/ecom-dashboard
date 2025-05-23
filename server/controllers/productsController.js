@@ -1,23 +1,7 @@
 import db from '../db/connection.js'
 
-export const getInventory = async (req, res) => {
-  try {
-    const [rows] = await db.query(
-      'SELECT * FROM inventory ORDER BY date_added DESC'
-    )
-    res.json(rows)
-  } catch (err) {
-    res.status(500).json({
-      error: 'Failed to fetch inventory data',
-      message: err.message,
-    })
-  }
-}
-
-// ✅ Add product without date_added (let MySQL auto-set it)
 export const addProduct = async (req, res) => {
   const { product_name, sku, quantity_in_stock, price } = req.body
-
   if (!product_name || !sku || !quantity_in_stock || !price) {
     return res.status(400).json({ error: 'All fields are required' })
   }
@@ -27,12 +11,8 @@ export const addProduct = async (req, res) => {
       'INSERT INTO inventory (product_name, sku, quantity_in_stock, price) VALUES (?, ?, ?, ?)',
       [product_name, sku, quantity_in_stock, price]
     )
-
     res.status(201).json({ message: 'Product added successfully' })
   } catch (err) {
-    res.status(500).json({
-      error: 'Failed to add product',
-      message: err.message,
-    })
+    res.status(500).json({ error: 'Database error', message: err.message })
   }
 }

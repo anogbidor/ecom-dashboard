@@ -11,6 +11,8 @@ import Inventory from './pages/Inventory'
 import Analytics from './pages/Analytics'
 import Login from './pages/Login'
 import PrivateRoute from './routes/PrivateRoute'
+import AddProduct from './pages/AddProduct'
+
 
 const App = () => {
   const token = localStorage.getItem('token')
@@ -25,6 +27,16 @@ const App = () => {
         <Route
           path='/'
           element={<Navigate to={token ? '/dashboard' : '/login'} replace />}
+        />
+
+        {/* add product routes */}
+        <Route
+          path='/add-product'
+          element={
+            <PrivateRoute>
+              <AddProduct />
+            </PrivateRoute>
+          }
         />
 
         {/* Private routes */}
