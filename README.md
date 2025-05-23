@@ -14,6 +14,7 @@ A modern, interactive analytics dashboard for e-commerce businesses. Built with 
 | Forecasting | Python, Flask, scikit-learn, Pandas        |
 | Styling     | Tailwind CSS                               |
 | Linting     | ESLint, Prettier                           |
+| Auth        | JSON Web Tokens (JWT)                      |
 
 ---
 
