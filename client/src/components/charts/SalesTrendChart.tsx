@@ -10,6 +10,7 @@ import {
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import type { ChartData, ChartOptions } from 'chart.js'
+import {FiCalendar} from 'react-icons/fi'
 
 ChartJS.register(
   LineElement,
@@ -103,7 +104,12 @@ const SalesTrendChart = () => {
 
   return (
     <div className='bg-white p-4 rounded shadow w-full h-[300px] sm:h-[400px] md:h-[500px]'>
-      <h2 className='text-lg font-semibold mb-4'>📈 Sales Trends & Forecast</h2>
+       <h2 className='text-xl font-bold text-gray-900 flex items-center mb-3 gap-2'>
+                                         <span className='bg-blue-100 text-blue-600  p-2 rounded-lg'>
+                                           <FiCalendar />
+                                         </span>
+                                         Sales Trends & Forecast 
+                                       </h2>
       <Line data={chartData} options={options} />
     </div>
   )

@@ -11,6 +11,7 @@ import {
   Title,
 } from 'chart.js'
 import type { ChartData, ChartOptions } from 'chart.js'
+import { FiDollarSign } from 'react-icons/fi'
 
 ChartJS.register(
   LineElement,
@@ -99,7 +100,12 @@ const SalesChart = () => {
 
   return (
     <div className='bg-white rounded shadow p-4 w-full'>
-      <h2 className='text-lg font-semibold mb-4'>📈 Sales Over Time</h2>
+       <h2 className='text-2xl font-bold text-gray-900 flex items-center mb-3 gap-2'>
+                             <span className='bg-blue-100 text-blue-600  p-2 rounded-lg'>
+                               <FiDollarSign />
+                             </span>
+                             Sales Over Time
+                           </h2>
       <div className='h-[300px] sm:h-[400px] md:h-[500px]'>
         <Line data={chartData} options={options} />
       </div>

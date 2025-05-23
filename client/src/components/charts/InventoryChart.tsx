@@ -9,6 +9,7 @@ import {
   Legend,
 } from 'chart.js'
 import type { ChartData, ChartOptions } from 'chart.js'
+import {  FiPackage } from 'react-icons/fi'
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
 
@@ -82,7 +83,12 @@ const InventoryChart = () => {
 
   return (
     <div className='bg-white p-4 rounded shadow w-full'>
-      <h2 className='text-lg font-semibold mb-4'>📦 Inventory Stock Levels</h2>
+      <h2 className='text-2xl font-bold text-gray-900 flex items-center mb-3 gap-2'>
+                       <span className='bg-blue-100 text-blue-600  p-2 rounded-lg'>
+                         <FiPackage />
+                       </span>
+                       Inventory Stock Levels
+                     </h2>
       <div className='h-[300px] sm:h-[400px] md:h-[500px]'>
         <Bar data={chartData} options={options} />
       </div>
