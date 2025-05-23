@@ -6,7 +6,7 @@ type InventoryItem = {
   sku: string
   quantity_in_stock: number
   price: number
-  last_restocked: string
+  date_added: string
 }
 
 const LowStockTable = () => {
@@ -48,7 +48,7 @@ const LowStockTable = () => {
                 {item.quantity_in_stock} ⚠️
               </td>
               <td className='py-2 px-4'>
-                {new Date(item.last_restocked).toISOString().slice(0, 10)}
+                {new Date(item.date_added).toISOString().slice(0, 10)}
               </td>
             </tr>
           ))}
