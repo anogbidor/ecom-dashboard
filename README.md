@@ -29,8 +29,16 @@ e-commerce-dashboard/
 │   │   ├── components/
 │   │   │   ├── layout/
 │   │   │   ├── cards/
-│   │   │   └── charts/
+│   │   │   ├── charts/
+│   │   │   ├── forms/
+│   │   │   └── tables/
 │   │   ├── pages/
+│   │   │   ├── Dashboard.tsx
+│   │   │   ├── Sales.tsx
+│   │   │   ├── Customers.tsx
+│   │   │   ├── Inventory.tsx
+│   │   │   ├── Analytics.tsx
+│   │   │   └── AddProduct.tsx
 │   │   ├── App.tsx
 │   │   └── main.tsx
 │   └── tailwind.config.js
@@ -39,13 +47,17 @@ e-commerce-dashboard/
 │   ├── db/                   # MySQL connection
 │   ├── controllers/          # Route logic
 │   ├── routes/               # Express routes
+│   │   ├── sales.js
+│   │   ├── inventory.js
+│   │   ├── customers.js
+│   │   ├── kpis.js
+│   │   └── products.js
 │   └── server.js
 │
 ├── forecast_sales.py         # Flask API for sales forecasting
 ├── .env                      # Environment config (MySQL)
 └── README.md
-
----
+```
 
 ## 💻 Getting Started
 
