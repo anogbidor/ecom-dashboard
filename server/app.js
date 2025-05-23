@@ -6,6 +6,7 @@ import salesRoutes from './routes/sales.js'
 import customersRoutes from './routes/customers.js'
 import inventoryRoutes from './routes/inventory.js'
 import kpiRoutes from './routes/kpis.js'
+import authRoutes from './routes/auth.js'
 dotenv.config()
 
 const app = express()
@@ -26,6 +27,7 @@ db.getConnection()
   })
 
 // Routes
+app.use('/api/auth', authRoutes)
 app.use('/api/sales', salesRoutes)
 app.use('/api/customers', customersRoutes)
 app.use('/api/inventory', inventoryRoutes)
