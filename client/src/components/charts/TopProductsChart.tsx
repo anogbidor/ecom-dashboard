@@ -13,26 +13,33 @@ import { FiTrendingUp } from 'react-icons/fi'
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
 
+// ✅ Define the structure of the response
+interface TopProduct {
+  product_name: string
+  total_revenue: number
+  total_quantity: number
+}
+
 const TopProductsChart = () => {
   const [chartData, setChartData] = useState<ChartData<'bar'> | null>(null)
 
   useEffect(() => {
     const fetchTopProducts = async () => {
       const res = await fetch('/api/sales/top-products')
-      const data = await res.json()
+      const data: TopProduct[] = await res.json()
 
       const formatted: ChartData<'bar'> = {
-        labels: data.map((item: any) => item.product_name),
+        labels: data.map((item) => item.product_name),
         datasets: [
           {
             label: 'Revenue ($)',
-            data: data.map((item: any) => item.total_revenue),
-            backgroundColor: 'rgba(34, 197, 94, 0.6)', // Tailwind green-500
+            data: data.map((item) => item.total_revenue),
+            backgroundColor: 'rgba(34, 197, 94, 0.6)', // green
           },
           {
             label: 'Units Sold',
-            data: data.map((item: any) => item.total_quantity),
-            backgroundColor: 'rgba(59, 130, 246, 0.6)', // Tailwind blue-500
+            data: data.map((item) => item.total_quantity),
+            backgroundColor: 'rgba(59, 130, 246, 0.6)', // blue
             yAxisID: 'y1',
           },
         ],
@@ -102,13 +109,13 @@ const TopProductsChart = () => {
   if (!chartData) return <p>Loading top products...</p>
 
   return (
-    <div className='bg-white p-4 rounded shadow  w-full'>
+    <div className='bg-white p-4 rounded shadow w-full'>
       <h2 className='text-xl font-bold text-gray-900 flex items-center mb-3 mt-3 gap-2'>
-                                   <span className='bg-blue-100 text-blue-600  p-2 rounded-lg'>
-                                     <FiTrendingUp />
-                                   </span>
-                                   Top-Selling Products
-                                 </h2>
+        <span className='bg-blue-100 text-blue-600 p-2 rounded-lg'>
+          <FiTrendingUp />
+        </span>
+        Top-Selling Products
+      </h2>
       <div className='h-[300px] sm:h-[400px] md:h-[500px]'>
         <Bar data={chartData} options={options} />
       </div>

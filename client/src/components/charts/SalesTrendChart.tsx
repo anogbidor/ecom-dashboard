@@ -10,7 +10,7 @@ import {
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import type { ChartData, ChartOptions } from 'chart.js'
-import {FiCalendar} from 'react-icons/fi'
+import { FiCalendar } from 'react-icons/fi'
 
 ChartJS.register(
   LineElement,
@@ -20,6 +20,17 @@ ChartJS.register(
   Tooltip,
   Legend
 )
+
+// Define types for your API response data
+interface SalesData {
+  date: string
+  total: number
+}
+
+interface ForecastData {
+  date: string
+  forecast: number
+}
 
 const SalesTrendChart = () => {
   const [chartData, setChartData] = useState<ChartData<'line'> | null>(null)
@@ -52,14 +63,14 @@ const SalesTrendChart = () => {
           throw new Error('Failed to fetch data')
         }
 
-        const actual = await resSales.json()
-        const forecast = await resForecast.json()
+        const actual: SalesData[] = await resSales.json()
+        const forecast: ForecastData[] = await resForecast.json()
 
         const allDates = [
-          ...actual.map((item: any) =>
+          ...actual.map((item) =>
             new Date(item.date).toISOString().slice(0, 10)
           ),
-          ...forecast.map((item: any) => item.date),
+          ...forecast.map((item) => item.date),
         ]
 
         const formatted: ChartData<'line'> = {
@@ -68,7 +79,7 @@ const SalesTrendChart = () => {
             {
               label: 'Actual Sales ($)',
               data: [
-                ...actual.map((item: any) => item.total),
+                ...actual.map((item) => item.total),
                 ...new Array(forecast.length).fill(null),
               ],
               borderColor: 'rgb(59, 130, 246)',
@@ -80,7 +91,7 @@ const SalesTrendChart = () => {
               label: 'Forecasted Sales ($)',
               data: [
                 ...new Array(actual.length).fill(null),
-                ...forecast.map((item: any) => item.forecast),
+                ...forecast.map((item) => item.forecast),
               ],
               borderColor: 'rgb(234, 179, 8)',
               backgroundColor: 'rgba(234, 179, 8, 0.1)',
@@ -104,12 +115,12 @@ const SalesTrendChart = () => {
 
   return (
     <div className='bg-white p-4 rounded shadow w-full h-[300px] sm:h-[400px] md:h-[500px]'>
-       <h2 className='text-xl font-bold text-gray-900 flex items-center mb-3 gap-2'>
-                                         <span className='bg-blue-100 text-blue-600  p-2 rounded-lg'>
-                                           <FiCalendar />
-                                         </span>
-                                         Sales Trends & Forecast 
-                                       </h2>
+      <h2 className='text-xl font-bold text-gray-900 flex items-center mb-3 gap-2'>
+        <span className='bg-blue-100 text-blue-600 p-2 rounded-lg'>
+          <FiCalendar />
+        </span>
+        Sales Trends & Forecast
+      </h2>
       <Line data={chartData} options={options} />
     </div>
   )
