@@ -7,7 +7,7 @@ const Sidebar = () => {
       <h1 className='text-2xl font-bold mb-8'>🛍️ Dashboard</h1>
       <ul className='space-y-4'>
         <li>
-          <Link to='/' className='hover:text-teal-400 block'>
+          <Link to='/dashboard' className='hover:text-teal-400 block'>
             Overview
           </Link>
         </li>
