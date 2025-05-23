@@ -97,8 +97,16 @@ Then visit http://localhost:5173
 *Low stock alert table
 *KPI metrics powered by live data
 
- 🧠 Coming Soon 
-*🔐 JWT-based authentication
-*🧾 Add product / add sale forms
+### ✅ Phase 5: Authentication
+*JWT-based login system with protected routes
+*Conditional routing and token storage
+*Logout modal with confirmation + keyboard escape support
+
+---
+
+## 🧠 Coming Soon
+
+*🧾 Add sale form
 *📈 Export dashboard to CSV/PDF
-*🧠 Advanced ML forecasting
+*🤖 Advanced ML forecasting & anomaly detection
+* 🔄 Live sync with external APIs (Shopify, WooCommerce)
