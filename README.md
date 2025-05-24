@@ -22,40 +22,54 @@ A modern, interactive analytics dashboard for e-commerce businesses. Built with 
 
 ```bash
 e-commerce-dashboard/
-├── client/                   # React + Vite frontend
+├── client/                             # React + Vite frontend
 │   ├── public/
 │   ├── src/
 │   │   ├── assets/
 │   │   ├── components/
-│   │   │   ├── layout/
-│   │   │   ├── cards/
-│   │   │   ├── charts/
-│   │   │   ├── forms/
-│   │   │   └── tables/
+│   │   │   ├── layout/                 # Navbar, Sidebar, etc.
+│   │   │   ├── cards/                  # Stat/KPI Cards
+│   │   │   ├── charts/                 # Chart.js visualizations
+│   │   │   ├── forms/                  # AddProductForm, AddSaleForm
+│   │   │   └── tables/                 # InventoryTable, SalesTable, etc.
 │   │   ├── pages/
 │   │   │   ├── Dashboard.tsx
 │   │   │   ├── Sales.tsx
 │   │   │   ├── Customers.tsx
 │   │   │   ├── Inventory.tsx
 │   │   │   ├── Analytics.tsx
-│   │   │   └── AddProduct.tsx
+│   │   │   ├── AddProduct.tsx
+│   │   │   ├── AddSale.tsx
+│   │   │   └── Login.tsx
+│   │   ├── routes/
+│   │   │   └── PrivateRoute.tsx
 │   │   ├── App.tsx
 │   │   └── main.tsx
 │   └── tailwind.config.js
 │
-├── server/                   # Node.js backend API
-│   ├── db/                   # MySQL connection
-│   ├── controllers/          # Route logic
-│   ├── routes/               # Express routes
+├── server/                             # Node.js backend API
+│   ├── db/
+│   │   └── connection.js               # MySQL DB connection
+│   ├── controllers/                    # Controller logic
+│   │   ├── salesController.js
+│   │   ├── inventoryController.js
+│   │   ├── customersController.js
+│   │   ├── kpiController.js
+│   │   ├── productsController.js
+│   │   └── authController.js           # 🔐 Login controller
+│   ├── routes/                         # Express routes
 │   │   ├── sales.js
 │   │   ├── inventory.js
 │   │   ├── customers.js
 │   │   ├── kpis.js
-│   │   └── products.js
-│   └── server.js
+│   │   ├── products.js
+│   │   └── auth.js                     # 🔐 Auth routes
+│   ├── utils/
+│   │   └── hashPassword.js             # 🔒 Admin password hasher
+│   └── server.js                       # Express app entry
 │
-├── forecast_sales.py         # Flask API for sales forecasting
-├── .env                      # Environment config (MySQL)
+├── forecast_sales.py                   # Python Flask API for sales forecasting
+├── .env                                # Backend environment variables
 └── README.md
 ```
 
