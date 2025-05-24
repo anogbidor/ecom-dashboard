@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -20,18 +21,23 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       })
 
-      const data = await res.json()
+      const text = await res.text()
+      const data = text ? JSON.parse(text) : {}
 
       if (!res.ok) {
+        toast.error(data.error || 'Login failed')
         setError(data.error || 'Login failed')
         return
       }
 
       localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data.user))
+
+      toast.success('🎉 Logged in successfully!')
       navigate('/dashboard')
     } catch (err) {
       console.error(err)
+      toast.error('Network error. Please try again.')
       setError('Network error. Please try again.')
     } finally {
       setIsLoading(false)

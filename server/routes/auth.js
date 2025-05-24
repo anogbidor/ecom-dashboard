@@ -1,34 +1,44 @@
 import express from 'express'
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import db from '../db/connection.js'
 
 const router = express.Router()
-
-// Mock user credentials
-const mockUser = {
-  email: 'admin@example.com',
-  password: 'admin123', // In production, NEVER store raw passwords
-  name: 'Admin User',
-}
-
-// Secret key (in production, use env variable!)
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey'
 
-router.post('/login', (req, res) => {
- console.log('📨 Received body:', req.body) 
+router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
-  if (email === mockUser.email && password === mockUser.password) {
-    const token = jwt.sign(
-      { email: mockUser.email, name: mockUser.name },
-      JWT_SECRET,
-      {
-        expiresIn: '1h',
-      }
+  try {
+    const [rows] = await db.query(
+      'SELECT * FROM admin WHERE email = ? OR username = ? LIMIT 1',
+      [email, email]
     )
-    return res.json({ token, user: { name: mockUser.name, email } })
-  }
 
-  return res.status(401).json({ error: 'Invalid email or password' })
+    const user = rows[0]
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid email or password' })
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password)
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid email or password' })
+    }
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email, name: user.username },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    )
+
+    res.json({
+      token,
+      user: { name: user.username, email: user.email },
+    })
+  } catch (err) {
+    console.error('Login failed:', err)
+    res.status(500).json({ error: 'Server error during login' })
+  }
 })
 
 export default router

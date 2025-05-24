@@ -110,16 +110,21 @@ Then visit http://localhost:5173
 *Low stock alert table
 *KPI metrics powered by live data
 
-### ✅ Phase 5: Authentication
+✅ Phase 5: Authentication
 *JWT-based login system with protected routes
 *Conditional routing and token storage
 *Logout modal with confirmation + keyboard escape support
+
+✅ Phase 6: Add Product & Sale Forms
+* Add product form with SKU, stock, and validation
+* Add sale form with auto-calculated total based on product price and quantity
+* Inventory updates automatically when sale is recorded
+* Toast notifications, animations, and error handling for better UX
 
 ---
 
 ## 🧠 Coming Soon
 
-*🧾 Add sale form
 *📈 Export dashboard to CSV/PDF
 *🤖 Advanced ML forecasting & anomaly detection
 *🔄 Live sync with external APIs (Shopify, WooCommerce)
