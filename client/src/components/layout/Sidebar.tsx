@@ -17,6 +17,7 @@ const Sidebar = () => {
     { to: '/inventory', icon: <FiPackage />, text: 'Inventory' },
     { to: '/analytics', icon: <FiBarChart2 />, text: 'Analytics' },
     { to: '/add-product', icon: <FiPlusSquare />, text: 'Add Product' },
+    { to: '/add-sale', icon: <FiDollarSign />, text: 'Add Sale' }, // ✅ Added
   ]
 
   return (

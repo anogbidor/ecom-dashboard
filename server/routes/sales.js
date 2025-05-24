@@ -3,6 +3,7 @@ import db from '../db/connection.js'
 import {
   getSalesTrends,
   getTopProducts,
+  addSale
 } from '../controllers/salesController.js' // ✅ Add this
 
 const router = express.Router()
@@ -18,8 +19,11 @@ router.get('/', async (req, res) => {
   }
 })
 
+
+
 // ✅ Now this will work:
 router.get('/trends', getSalesTrends)
 router.get('/top-products', getTopProducts)
+router.post('/', addSale)
 
 export default router

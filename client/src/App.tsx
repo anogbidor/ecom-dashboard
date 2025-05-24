@@ -12,6 +12,7 @@ import Analytics from './pages/Analytics'
 import Login from './pages/Login'
 import PrivateRoute from './routes/PrivateRoute'
 import AddProduct from './pages/AddProduct'
+import AddSale from './pages/AddSale'
 
 const App = () => {
   return (
@@ -69,6 +70,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <AddProduct />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/add-sale'
+          element={
+            <PrivateRoute>
+              <AddSale />
             </PrivateRoute>
           }
         />

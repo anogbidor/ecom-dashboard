@@ -93,8 +93,8 @@ const SalesTable = () => {
       <div className='flex flex-col md:flex-row gap-4 mb-4'>
         <div>
           <label className='block text-sm font-medium'>Start Date</label>
-      <input
-       title='Start Date'
+          <input
+            title='Start Date'
             type='date'
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
@@ -104,8 +104,8 @@ const SalesTable = () => {
 
         <div>
           <label className='block text-sm font-medium'>End Date</label>
-      <input
-       title='End Date'
+          <input
+            title='End Date'
             type='date'
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
@@ -158,7 +158,7 @@ const SalesTable = () => {
                 ${Number(sale.total_price).toFixed(2)}
               </td>
               <td className='py-2 px-4'>
-                {new Date(sale.sale_date).toISOString().slice(0, 10)}
+                {new Date(sale.sale_date).toLocaleDateString('en-CA')}
               </td>
             </tr>
           ))}
