@@ -10,7 +10,7 @@ A modern, interactive analytics dashboard for e-commerce businesses. Built with 
 |-------------|--------------------------------------------|
 | Frontend    | React, TypeScript, Vite, Tailwind CSS      |
 | Charts      | Chart.js, D3.js                            |
-| Backend     | Node.js, Express.js, MySQL                 |
+| Backend     | Node.js, Express.js, MySQL, bcrypt                 |
 | Forecasting | Python, Flask, scikit-learn, Pandas        |
 | Styling     | Tailwind CSS                               |
 | Linting     | ESLint, Prettier                           |
