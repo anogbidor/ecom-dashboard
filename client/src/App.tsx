@@ -13,33 +13,17 @@ import Login from './pages/Login'
 import PrivateRoute from './routes/PrivateRoute'
 import AddProduct from './pages/AddProduct'
 
-
 const App = () => {
-  const token = localStorage.getItem('token')
-
   return (
     <Router>
       <Routes>
-        {/* Public login route */}
+        {/* Public Route */}
         <Route path='/login' element={<Login />} />
 
-        {/* Redirect root to dashboard or login */}
-        <Route
-          path='/'
-          element={<Navigate to={token ? '/dashboard' : '/login'} replace />}
-        />
+        {/* Redirect root to dashboard (guarded inside PrivateRoute) */}
+        <Route path='/' element={<Navigate to='/dashboard' replace />} />
 
-        {/* add product routes */}
-        <Route
-          path='/add-product'
-          element={
-            <PrivateRoute>
-              <AddProduct />
-            </PrivateRoute>
-          }
-        />
-
-        {/* Private routes */}
+        {/* Private Routes */}
         <Route
           path='/dashboard'
           element={
@@ -77,6 +61,14 @@ const App = () => {
           element={
             <PrivateRoute>
               <Analytics />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/add-product'
+          element={
+            <PrivateRoute>
+              <AddProduct />
             </PrivateRoute>
           }
         />

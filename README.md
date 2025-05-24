@@ -122,4 +122,4 @@ Then visit http://localhost:5173
 *🧾 Add sale form
 *📈 Export dashboard to CSV/PDF
 *🤖 Advanced ML forecasting & anomaly detection
-* 🔄 Live sync with external APIs (Shopify, WooCommerce)
+*🔄 Live sync with external APIs (Shopify, WooCommerce)
