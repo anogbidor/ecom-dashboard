@@ -75,7 +75,7 @@ const AddProductForm = () => {
         className='bg-white p-8 rounded-xl shadow-lg space-y-6 border border-gray-100'
       >
         <div className='border-b border-gray-200 pb-5'>
-          <h2 className='text-2xl font-bold text-gray-900 flex items-center gap-2'>
+          <h2 className='text-2xl font-semibold text-gray-900 flex items-center gap-2'>
             <span className='bg-blue-100 text-blue-600 p-2 rounded-lg'>
               <FiPlusSquare />
             </span>

@@ -109,12 +109,17 @@ const AddSaleForm = () => {
         onSubmit={handleSubmit}
         className='bg-white p-8 rounded-xl shadow-lg space-y-6 border border-gray-100'
       >
-        <h2 className='text-2xl font-bold text-gray-900 flex items-center gap-2'>
-          <span className='bg-green-100 text-green-600 p-2 rounded-lg'>
-            <FiDollarSign />
-          </span>
-          Record New Sale
-        </h2>
+        <div className='border-b border-gray-200 pb-5'>
+          <h2 className='text-2xl font-semibold text-gray-900 flex items-center gap-2'>
+            <span className='bg-blue-100 text-blue-600 p-2 rounded-lg'>
+              <FiDollarSign />
+            </span>
+            Record New Sale
+          </h2>
+          <p className='mt-2 text-sm text-gray-500'>
+            Fill out the form below to record a new sale
+          </p>
+        </div>
 
         {error && (
           <motion.div
@@ -193,7 +198,7 @@ const AddSaleForm = () => {
           type='submit'
           whileTap={{ scale: 0.97 }}
           disabled={submitting}
-          className={`w-full bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-all focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ${
+          className={`w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
             submitting ? 'opacity-70 cursor-not-allowed' : ''
           }`}
         >
