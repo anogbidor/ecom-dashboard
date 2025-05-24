@@ -120,6 +120,8 @@ Then visit http://localhost:5173
 * Add sale form with auto-calculated total based on product price and quantity
 * Inventory updates automatically when sale is recorded
 * Toast notifications, animations, and error handling for better UX
+* Dynamic dropdown of inventory products for sale
+* Real-time form validation and feedback using react-hot-toast
 
 ---
 
