@@ -140,12 +140,15 @@ Then visit http://localhost:5173
 * Real-time form validation and feedback using react-hot-toast
 
 
-✅ Phase 7: Password Reset (NEW)
+✅ Phase 7: Password Reset 
 *Forgot password flow with secure token generation
 *Reset password page with confirmation
 *Admin table with hashed passwords
 *Reset token table with expiration handling
 
+
+✅ Phase 8: Password Reset (NEW)
+*🧾 Admin account settings (change username/password)
 ---
 
 ## 🧠 Coming Soon
@@ -153,5 +156,4 @@ Then visit http://localhost:5173
 *📈 Export dashboard to CSV/PDF
 *🤖 Advanced ML forecasting & anomaly detection
 *🔄 Live sync with external APIs (Shopify, WooCommerce)
-*🧾 Admin account settings (change username/password)
 *✉️ Email alerts for new sales
