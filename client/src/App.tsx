@@ -13,6 +13,8 @@ import Login from './pages/Login'
 import PrivateRoute from './routes/PrivateRoute'
 import AddProduct from './pages/AddProduct'
 import AddSale from './pages/AddSale'
+import ResetPassword from './pages/ResetPassword'
+import ForgotPassword from './pages/ForgotPassword'
 
 const App = () => {
   return (
@@ -82,6 +84,8 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
       </Routes>
     </Router>
   )

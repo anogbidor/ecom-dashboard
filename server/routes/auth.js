@@ -1,11 +1,15 @@
 import express from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
 import db from '../db/connection.js'
 
 const router = express.Router()
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey'
 
+/**
+ * Admin Login
+ */
 router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
@@ -38,6 +42,89 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.error('Login failed:', err)
     res.status(500).json({ error: 'Server error during login' })
+  }
+})
+
+/**
+ * Forgot Password - Generate Token
+ */
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email is required' })
+  }
+
+  try {
+    const [rows] = await db.query('SELECT * FROM admin WHERE email = ?', [
+      email,
+    ])
+    const admin = rows[0]
+
+    if (!admin) {
+      return res
+        .status(404)
+        .json({ error: 'Admin with this email does not exist' })
+    }
+
+    const token = crypto.randomBytes(32).toString('hex')
+    const expiresAt = new Date(Date.now() + 1000 * 60 * 15) // 15 min
+
+    await db.query(
+      'INSERT INTO password_reset_tokens (admin_id, token, expires_at) VALUES (?, ?, ?)',
+      [admin.id, token, expiresAt]
+    )
+
+    // In production, send this by email
+    console.log(
+      `🔗 Reset Link: http://localhost:5173/reset-password?token=${token}`
+    )
+
+    res.json({ message: 'Password reset token generated and logged.' })
+  } catch (err) {
+    console.error('❌ Forgot password error:', err)
+    res.status(500).json({ error: 'Server error during token generation' })
+  }
+})
+
+/**
+ * Reset Password - Validate Token and Update Password
+ */
+router.post('/reset-password', async (req, res) => {
+  const { token, newPassword } = req.body
+
+  if (!token || !newPassword) {
+    return res
+      .status(400)
+      .json({ error: 'Token and new password are required' })
+  }
+
+  try {
+    const [rows] = await db.query(
+      'SELECT * FROM password_reset_tokens WHERE token = ? AND expires_at > NOW()',
+      [token]
+    )
+    const resetToken = rows[0]
+
+    if (!resetToken) {
+      return res.status(400).json({ error: 'Invalid or expired token' })
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10)
+
+    await db.query('UPDATE admin SET password = ? WHERE id = ?', [
+      hashedPassword,
+      resetToken.admin_id,
+    ])
+
+    await db.query('DELETE FROM password_reset_tokens WHERE id = ?', [
+      resetToken.id,
+    ])
+
+    res.json({ message: 'Password has been reset successfully' })
+  } catch (err) {
+    console.error('❌ Reset password error:', err)
+    res.status(500).json({ error: 'Server error during password reset' })
   }
 })
 
