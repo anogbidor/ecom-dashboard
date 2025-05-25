@@ -43,7 +43,7 @@ const ResetPassword = () => {
         return
       }
 
-      toast.success('Password reset successful!')
+      toast.success('🔐 Password reset successful!')
       navigate('/login')
     } catch {
       setError('Network error. Please try again.')

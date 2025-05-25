@@ -44,7 +44,7 @@ const AccountSettings = () => {
       if (!res.ok) return toast.error(data.error || 'Update failed')
 
       localStorage.setItem('user', JSON.stringify({ ...user, name: username }))
-      toast.success('✅ Username updated successfully!')
+      toast.success('👤 Username updated successfully!')
 
       // 🟢 Immediately fetch updated notifications
       await notificationCtx?.fetchNotifications()
