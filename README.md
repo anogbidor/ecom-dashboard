@@ -149,6 +149,7 @@ Then visit http://localhost:5173
 
 ✅ Phase 8: Password Reset (NEW)
 *🧾 Admin account settings (change username/password)
+*✉️ in app  notification alerts for new sales and username updates
 ---
 
 ## 🧠 Coming Soon
@@ -156,4 +157,4 @@ Then visit http://localhost:5173
 *📈 Export dashboard to CSV/PDF
 *🤖 Advanced ML forecasting & anomaly detection
 *🔄 Live sync with external APIs (Shopify, WooCommerce)
-*✉️ Email alerts for new sales
+
