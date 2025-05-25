@@ -40,7 +40,9 @@ e-commerce-dashboard/
 │   │   │   ├── Analytics.tsx
 │   │   │   ├── AddProduct.tsx
 │   │   │   ├── AddSale.tsx
-│   │   │   └── Login.tsx
+│   │   │   ├── Login.tsx
+│   │   │   ├── ForgotPassword.tsx      # 🔐 Request reset token
+│   │   │   └── ResetPassword.tsx       # 🔐 Enter new password
 │   │   ├── routes/
 │   │   │   └── PrivateRoute.tsx
 │   │   ├── App.tsx
@@ -56,14 +58,14 @@ e-commerce-dashboard/
 │   │   ├── customersController.js
 │   │   ├── kpiController.js
 │   │   ├── productsController.js
-│   │   └── authController.js           # 🔐 Login controller
+│   │   └── authController.js           # 🔐 Login + Reset logic
 │   ├── routes/                         # Express routes
 │   │   ├── sales.js
 │   │   ├── inventory.js
 │   │   ├── customers.js
 │   │   ├── kpis.js
 │   │   ├── products.js
-│   │   └── auth.js                     # 🔐 Auth routes
+│   │   └── auth.js                     # 🔐 Auth routes (login/reset)
 │   ├── utils/
 │   │   └── hashPassword.js             # 🔒 Admin password hasher
 │   └── server.js                       # Express app entry
@@ -137,6 +139,13 @@ Then visit http://localhost:5173
 * Dynamic dropdown of inventory products for sale
 * Real-time form validation and feedback using react-hot-toast
 
+
+✅ Phase 7: Password Reset (NEW)
+*Forgot password flow with secure token generation
+*Reset password page with confirmation
+*Admin table with hashed passwords
+*Reset token table with expiration handling
+
 ---
 
 ## 🧠 Coming Soon
@@ -144,3 +153,5 @@ Then visit http://localhost:5173
 *📈 Export dashboard to CSV/PDF
 *🤖 Advanced ML forecasting & anomaly detection
 *🔄 Live sync with external APIs (Shopify, WooCommerce)
+*🧾 Admin account settings (change username/password)
+*✉️ Email alerts for new sales
