@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import db from '../db/connection.js'
+import verifyToken from '../middleware/verifyToken.js'
 
 const router = express.Router()
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey'
@@ -125,6 +126,41 @@ router.post('/reset-password', async (req, res) => {
   } catch (err) {
     console.error('❌ Reset password error:', err)
     res.status(500).json({ error: 'Server error during password reset' })
+  }
+})
+
+
+
+/**
+ * Update Password - With Current Password Verification
+ */
+router.post('/update-password', verifyToken, async (req, res) => {
+  const { currentPassword, newPassword } = req.body
+  const adminId = req.user?.id
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'All fields are required' })
+  }
+
+  try {
+    const [rows] = await db.query('SELECT * FROM admin WHERE id = ?', [adminId])
+    const admin = rows[0]
+
+    const isMatch = await bcrypt.compare(currentPassword, admin.password)
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Current password is incorrect' })
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 10)
+    await db.query('UPDATE admin SET password = ? WHERE id = ?', [
+      hashed,
+      adminId,
+    ])
+
+    res.json({ message: 'Password updated successfully' })
+  } catch (err) {
+    console.error('Password update error:', err)
+    res.status(500).json({ error: 'Failed to update password' })
   }
 })
 

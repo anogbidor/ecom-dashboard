@@ -15,6 +15,7 @@ import AddProduct from './pages/AddProduct'
 import AddSale from './pages/AddSale'
 import ResetPassword from './pages/ResetPassword'
 import ForgotPassword from './pages/ForgotPassword'
+import AccountSettings from './pages/AccountSettings'
 
 const App = () => {
   return (
@@ -32,6 +33,15 @@ const App = () => {
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/account-settings'
+          element={
+            <PrivateRoute>
+              <AccountSettings />
             </PrivateRoute>
           }
         />
