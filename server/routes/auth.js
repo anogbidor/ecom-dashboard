@@ -130,38 +130,47 @@ router.post('/reset-password', async (req, res) => {
 })
 
 
-
 /**
- * Update Password - With Current Password Verification
- */
-router.post('/update-password', verifyToken, async (req, res) => {
-  const { currentPassword, newPassword } = req.body
-  const adminId = req.user?.id
+ * Update Username
+*/
+router.post('/update-username', verifyToken, async (req, res) => {
+ const { newUsername } = req.body
+ const adminId = req.user?.id
 
-  if (!currentPassword || !newPassword) {
-    return res.status(400).json({ error: 'All fields are required' })
-  }
+ if (!newUsername) {
+   return res.status(400).json({ error: 'New username is required' })
+ }
 
-  try {
-    const [rows] = await db.query('SELECT * FROM admin WHERE id = ?', [adminId])
-    const admin = rows[0]
+ try {
+   // Optional: Check if username already exists
+   const [existing] = await db.query(
+     'SELECT id FROM admin WHERE username = ?',
+     [newUsername]
+   )
+   if (existing.length > 0 && existing[0].id !== adminId) {
+     return res.status(409).json({ error: 'Username already taken' })
+   }
 
-    const isMatch = await bcrypt.compare(currentPassword, admin.password)
-    if (!isMatch) {
-      return res.status(401).json({ error: 'Current password is incorrect' })
-    }
+   // Update username
+   await db.query('UPDATE admin SET username = ? WHERE id = ?', [
+     newUsername,
+     adminId,
+   ])
 
-    const hashed = await bcrypt.hash(newPassword, 10)
-    await db.query('UPDATE admin SET password = ? WHERE id = ?', [
-      hashed,
-      adminId,
-    ])
+   // Insert notification
+   await db.query(
+     'INSERT INTO notifications (admin_id, message) VALUES (?, ?)',
+     [adminId, `👤 Username updated to "${newUsername}"`]
+   )
 
-    res.json({ message: 'Password updated successfully' })
-  } catch (err) {
-    console.error('Password update error:', err)
-    res.status(500).json({ error: 'Failed to update password' })
-  }
+   res.json({
+     message: 'Username updated successfully',
+     username: newUsername,
+   })
+ } catch (err) {
+   console.error('Username update error:', err)
+   res.status(500).json({ error: 'Failed to update username' })
+ }
 })
 
 export default router

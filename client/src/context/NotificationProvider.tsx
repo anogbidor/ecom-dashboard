@@ -1,5 +1,4 @@
-// src/context/NotificationProvider.tsx
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { NotificationContext } from './NotificationContext'
 import type { Notification } from '../types/Notification'
 
@@ -17,11 +16,17 @@ export const NotificationProvider = ({
         headers: { Authorization: `Bearer ${token}` },
       })
       const data = await res.json()
-      setNotifications(data)
+      setNotifications(
+        data.map((n: Notification) => ({ ...n, is_read: Boolean(n.is_read) }))
+      )
     } catch (err) {
-      console.error('❌ Failed to fetch notifications', err)
+      console.error('❌ Failed to fetch notifications:', err)
     }
   }, [])
+
+  useEffect(() => {
+    fetchNotifications()
+  }, [fetchNotifications])
 
   return (
     <NotificationContext.Provider

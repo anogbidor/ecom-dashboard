@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import {
@@ -10,6 +10,7 @@ import {
   FiEye,
   FiEyeOff,
 } from 'react-icons/fi'
+import { NotificationContext } from '../context/NotificationContext'
 
 const AccountSettings = () => {
   const user = JSON.parse(localStorage.getItem('user') || '{}')
@@ -20,6 +21,8 @@ const AccountSettings = () => {
   const [loadingUsername, setLoadingUsername] = useState(false)
   const [loadingPassword, setLoadingPassword] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+
+  const notificationCtx = useContext(NotificationContext)
 
   const handleUsernameUpdate = async () => {
     if (!username.trim()) return toast.error('Username cannot be empty')
@@ -33,7 +36,7 @@ const AccountSettings = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ username }),
+        body: JSON.stringify({ newUsername: username }),
       })
 
       const data = await res.json()
@@ -42,6 +45,9 @@ const AccountSettings = () => {
 
       localStorage.setItem('user', JSON.stringify({ ...user, name: username }))
       toast.success('✅ Username updated successfully!')
+
+      // 🟢 Immediately fetch updated notifications
+      await notificationCtx?.fetchNotifications()
     } catch {
       toast.error('Server error. Try again.')
     } finally {
@@ -79,6 +85,9 @@ const AccountSettings = () => {
       setCurrentPassword('')
       setNewPassword('')
       setConfirmPassword('')
+
+      // Optional: fetch notifications if you add one on backend for password
+      // await notificationCtx?.fetchNotifications()
     } catch {
       toast.error('Server error. Try again.')
     } finally {
