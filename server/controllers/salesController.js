@@ -1,6 +1,6 @@
 import db from '../db/connection.js'
 
-// Get sales trends
+// 📈 Get sales trends
 export const getSalesTrends = async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -17,7 +17,7 @@ export const getSalesTrends = async (req, res) => {
   }
 }
 
-// Get top 5 products
+// 🔝 Get top 5 products
 export const getTopProducts = async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -39,20 +39,21 @@ export const getTopProducts = async (req, res) => {
   }
 }
 
-// Add Sale API endpoint
+// 💸 Add Sale + 📦 Inventory Update + 🔔 Notification
 export const addSale = async (req, res) => {
   const { product_name, quantity, total_price } = req.body
+  const adminId = req.user?.id // must come from verifyToken middleware
 
   if (!product_name || !quantity || !total_price) {
     return res.status(400).json({ error: 'All fields are required' })
   }
 
-  const conn = await db.getConnection() // Create a transactional connection
+  const conn = await db.getConnection()
 
   try {
     await conn.beginTransaction()
 
-    // Check if enough inventory exists
+    // 1. Lock and check inventory
     const [inventoryRows] = await conn.query(
       'SELECT quantity_in_stock FROM inventory WHERE product_name = ? FOR UPDATE',
       [product_name]
@@ -67,21 +68,30 @@ export const addSale = async (req, res) => {
       throw new Error('Not enough stock available')
     }
 
-    // Insert sale
+    // 2. Insert sale
     const saleDate = new Date()
     await conn.query(
       'INSERT INTO sales (product_name, quantity, total_price, sale_date) VALUES (?, ?, ?, ?)',
       [product_name, quantity, total_price, saleDate]
     )
 
-    // Update inventory
+    // 3. Update inventory
     await conn.query(
       'UPDATE inventory SET quantity_in_stock = quantity_in_stock - ? WHERE product_name = ?',
       [quantity, product_name]
     )
 
+    // 4. Insert notification with admin_id
+    const message = `💰 Sale recorded: ${quantity} ${product_name} for $${total_price}`
+    await conn.query(
+      'INSERT INTO notifications (admin_id, message) VALUES (?, ?)',
+      [adminId, message]
+    )
+
     await conn.commit()
-    res.status(201).json({ message: 'Sale recorded and inventory updated' })
+    res.status(201).json({
+      message: 'Sale recorded, inventory updated, and notification sent.',
+    })
   } catch (err) {
     await conn.rollback()
     res.status(500).json({ error: err.message || 'Failed to record sale' })

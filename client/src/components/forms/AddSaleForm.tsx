@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import { FiDollarSign } from 'react-icons/fi'
+import { NotificationContext } from '../../context/NotificationContext'
+import type { Notification } from '../../types/Notification'
 
 interface InventoryItem {
   id: number
@@ -19,9 +21,11 @@ const AddSaleForm = () => {
     quantity: '',
     total_price: '',
   })
-
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
+
+  const context = useContext(NotificationContext)
+  const { setNotifications } = context || {}
 
   // Fetch products
   useEffect(() => {
@@ -55,6 +59,21 @@ const AddSaleForm = () => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
+  const fetchNotifications = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      const res = await fetch('/api/notifications', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      const data = await res.json()
+      setNotifications?.(
+        data.map((n: Notification) => ({ ...n, is_read: Boolean(n.is_read) }))
+      )
+    } catch {
+      console.error('Failed to refresh notifications')
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -76,10 +95,14 @@ const AddSaleForm = () => {
       return
     }
 
+    const token = localStorage.getItem('token')
     try {
       const res = await fetch('/api/sales', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        } as HeadersInit,
         body: JSON.stringify(payload),
       })
 
@@ -90,6 +113,7 @@ const AddSaleForm = () => {
 
       toast.success(' Sale recorded successfully!')
       setForm({ product_name: '', quantity: '', total_price: '' })
+      await fetchNotifications()
     } catch (err: unknown) {
       if (err instanceof Error) setError(err.message)
       else setError('Unknown error occurred')
