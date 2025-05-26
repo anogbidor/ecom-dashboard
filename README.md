@@ -149,7 +149,7 @@ Then visit http://localhost:5173
 
 ✅ Phase 8: Password Reset (NEW)
 *🧾 Admin account settings (change username/password)
-*✉️ in app  notification alerts for new sales and username updates
+*✉️ in app  notification alerts for new sales and username  and password updates
 ---
 
 ## 🧠 Coming Soon
