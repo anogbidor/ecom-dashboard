@@ -173,4 +173,46 @@ router.post('/update-username', verifyToken, async (req, res) => {
  }
 })
 
+
+
+/**
+ * Update Password - With Current Password Verification
+ */
+router.post('/update-password', verifyToken, async (req, res) => {
+  const { currentPassword, newPassword } = req.body
+  const adminId = req.user?.id
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'All fields are required' })
+  }
+
+  try {
+    const [rows] = await db.query('SELECT * FROM admin WHERE id = ?', [adminId])
+    const admin = rows[0]
+
+    const isMatch = await bcrypt.compare(currentPassword, admin.password)
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Current password is incorrect' })
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 10)
+
+    await db.query('UPDATE admin SET password = ? WHERE id = ?', [
+      hashed,
+      adminId,
+    ])
+
+    // ✅ Insert notification
+    await db.query(
+      'INSERT INTO notifications (admin_id, message) VALUES (?, ?)',
+      [adminId, '🔐 Password changed successfully']
+    )
+
+    res.json({ message: 'Password updated successfully' })
+  } catch (err) {
+    console.error('Password update error:', err)
+    res.status(500).json({ error: 'Failed to update password' })
+  }
+})
+
 export default router
