@@ -158,3 +158,37 @@ Then visit http://localhost:5173
 *🤖 Advanced ML forecasting & anomaly detection
 *🔄 Live sync with external APIs (Shopify, WooCommerce)
 
+---
+
+## 🧠 Business Logic
+
+This E-commerce Dashboard is more than a basic CRUD system — it simulates real-world operational workflows found in inventory and sales management systems. Here's how:
+
+- 🔔 **Smart Notifications**  
+  Admins receive real-time notifications for key events like product sales, username changes, and password updates.
+
+- 📉 **Low Stock Alerts**  
+  The system flags products with inventory below a defined threshold (e.g., 25 units), enabling proactive restocking.
+
+- 💰 **Revenue Tracking**  
+  Sales records are stored and summarized, including date filtering and real-time total revenue calculation.
+
+- 📦 **Inventory Management with Filters**  
+  Products can be searched, filtered by stock range, and sorted by quantity, price, or date added — allowing efficient inventory decisions.
+
+- 🔐 **Secure Admin Controls**  
+  Includes JWT-based login, username/password update flows, and secure password reset via token validation.
+
+- 🧮 **Forecasting with AI**  
+  A connected Python backend provides future sales predictions, overlaid on existing data for visual comparison.
+
+- 📊 **Print-Ready Reports**  
+  Sales and inventory tables are printable via optimized layouts, allowing for easy export and reporting.
+
+- 🌐 **Mobile-Responsive UI**  
+  Fully responsive design ensures optimal use across desktop, tablet, and mobile screens.
+
+This logic was designed to reflect the actual needs of small-to-medium-sized e-commerce operations.
+
+---
+
