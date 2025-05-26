@@ -4,12 +4,25 @@ import verifyToken from '../middleware/verifyToken.js'
 
 const router = express.Router()
 
-// ✅ Get all notifications for the logged-in admin
+// ✅ Get unread + last 3 read notifications
 router.get('/', verifyToken, async (req, res) => {
   try {
     const [rows] = await db.query(
-      'SELECT * FROM notifications WHERE admin_id = ? ORDER BY created_at DESC',
-      [req.user.id]
+      `
+      (
+        SELECT * FROM notifications
+        WHERE admin_id = ? AND is_read = 0
+      )
+      UNION ALL
+      (
+        SELECT * FROM notifications
+        WHERE admin_id = ? AND is_read = 1
+        ORDER BY created_at DESC
+        LIMIT 3
+      )
+      ORDER BY created_at DESC
+      `,
+      [req.user.id, req.user.id]
     )
     res.json(rows)
   } catch (err) {
