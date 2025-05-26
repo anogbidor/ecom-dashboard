@@ -11,19 +11,25 @@ const Dashboard = () => {
       <div className='grid grid-cols-1 my-6'>
         <KpiStats />
       </div>
+
       {/* 📈 Sales Chart */}
       <div className='grid grid-cols-1'>
         <SalesChart />
       </div>
-      {/* 👥 Customer Table */}
-      <div className='grid grid-cols-1'>
-        <CustomerTable />
+
+      {/* 👥 Customer Table (Responsive Wrapper) */}
+      <div className='my-6'>
+        <div className='overflow-x-auto bg-white shadow rounded-lg p-4'>
+          <CustomerTable />
+        </div>
       </div>
-      {/* 📦 Inventory Table */}
-      <div className='grid grid-cols-1 my-6'>
-        <InventoryTable />
+
+      {/* 📦 Inventory Table (Responsive Wrapper) */}
+      <div className='my-6'>
+        <div className='overflow-x-auto bg-white shadow rounded-lg p-4'>
+          <InventoryTable />
+        </div>
       </div>
-      
     </DashboardLayout>
   )
 }

@@ -6,6 +6,11 @@ import KpiStats from '../components/charts/KpiStats'
 import { FiBarChart2, FiTrendingDown } from 'react-icons/fi'
 
 const Analytics = () => {
+  // Function to handle print
+  const handlePrint = () => {
+    window.print()
+  }
+
   return (
     <DashboardLayout>
       <h2 className='text-2xl font-bold text-gray-900 flex items-center mb-4 gap-2'>
@@ -37,6 +42,15 @@ const Analytics = () => {
           Low Stock Items
         </h2>
         <LowStockTable />
+        <div className='flex justify-end mt-4'>
+          <button
+            type='button'
+            onClick={handlePrint}
+            className='bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700'
+          >
+            Print
+          </button>
+        </div>
       </div>
     </DashboardLayout>
   )

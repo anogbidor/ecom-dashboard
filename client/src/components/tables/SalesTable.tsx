@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 
-// Sale type definition
 type Sale = {
   id: number
   product_name: string
@@ -67,9 +66,7 @@ const SalesTable = () => {
     })
   }
 
-  const handlePrint = () => {
-    window.print()
-  }
+  const handlePrint = () => window.print()
 
   const totalRevenue = filteredSales.reduce(
     (sum, sale) => sum + Number(sale.total_price || 0),
@@ -77,13 +74,13 @@ const SalesTable = () => {
   )
 
   return (
-    <div className='bg-white p-4 rounded-lg shadow overflow-x-auto'>
-      <div className='flex justify-between items-center mb-4'>
+    <div className='bg-white p-4 rounded-lg shadow'>
+      <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2'>
         <h2 className='text-lg font-semibold'>Sales Records</h2>
         <button
           type='button'
           onClick={handlePrint}
-          className='bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700'
+          className='bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700 self-end sm:self-auto'
         >
           Print
         </button>
@@ -125,51 +122,85 @@ const SalesTable = () => {
         </div>
       </div>
 
-      <table className='min-w-full text-sm text-left print:text-xs'>
-        <thead className='bg-gray-100'>
-          <tr>
-            <th className='py-2 px-4'>Product</th>
-            <th
-              className='py-2 px-4 cursor-pointer hover:text-teal-600'
-              onClick={() => handleSort('quantity')}
-            >
-              Quantity {sortKey === 'quantity' && (sortAsc ? '⬆️' : '⬇️')}
-            </th>
-            <th
-              className='py-2 px-4 cursor-pointer hover:text-teal-600'
-              onClick={() => handleSort('price')}
-            >
-              Total Price ($) {sortKey === 'price' && (sortAsc ? '⬆️' : '⬇️')}
-            </th>
-            <th
-              className='py-2 px-4 cursor-pointer hover:text-teal-600'
-              onClick={() => handleSort('date')}
-            >
-              Sale Date {sortKey === 'date' && (sortAsc ? '⬆️' : '⬇️')}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredSales.map((sale) => (
-            <tr key={sale.id} className='border-b hover:bg-gray-50'>
-              <td className='py-2 px-4'>{sale.product_name}</td>
-              <td className='py-2 px-4'>{sale.quantity}</td>
-              <td className='py-2 px-4'>
-                ${Number(sale.total_price).toFixed(2)}
-              </td>
-              <td className='py-2 px-4'>
-                {new Date(sale.sale_date).toLocaleDateString('en-CA')}
+      {/* ✅ Table for desktop */}
+      <div className='hidden md:block overflow-x-auto'>
+        <table className='min-w-full text-sm text-left print:text-xs'>
+          <thead className='bg-gray-100'>
+            <tr>
+              <th className='py-2 px-4'>Product</th>
+              <th
+                className='py-2 px-4 cursor-pointer hover:text-teal-600'
+                onClick={() => handleSort('quantity')}
+              >
+                Quantity {sortKey === 'quantity' && (sortAsc ? '⬆️' : '⬇️')}
+              </th>
+              <th
+                className='py-2 px-4 cursor-pointer hover:text-teal-600'
+                onClick={() => handleSort('price')}
+              >
+                Total Price ($) {sortKey === 'price' && (sortAsc ? '⬆️' : '⬇️')}
+              </th>
+              <th
+                className='py-2 px-4 cursor-pointer hover:text-teal-600'
+                onClick={() => handleSort('date')}
+              >
+                Sale Date {sortKey === 'date' && (sortAsc ? '⬆️' : '⬇️')}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredSales.map((sale) => (
+              <tr key={sale.id} className='border-b hover:bg-gray-50'>
+                <td className='py-2 px-4'>{sale.product_name}</td>
+                <td className='py-2 px-4'>{sale.quantity}</td>
+                <td className='py-2 px-4'>
+                  ${Number(sale.total_price).toFixed(2)}
+                </td>
+                <td className='py-2 px-4'>
+                  {new Date(sale.sale_date).toLocaleDateString('en-CA')}
+                </td>
+              </tr>
+            ))}
+            <tr className='bg-gray-100 font-semibold'>
+              <td className='py-2 px-4'>Total Revenue</td>
+              <td className='py-2 px-4' colSpan={3}>
+                ${totalRevenue.toFixed(2)}
               </td>
             </tr>
-          ))}
-          <tr className='bg-gray-100 font-semibold'>
-            <td className='py-2 px-4'>Total Revenue</td>
-            <td className='py-2 px-4' colSpan={3}>
-              ${totalRevenue.toFixed(2)}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
+
+      {/* ✅ Cards for mobile */}
+      <div className='md:hidden space-y-4'>
+        {filteredSales.map((sale) => (
+          <div
+            key={sale.id}
+            className='border border-gray-200 rounded-lg p-4 shadow-sm'
+          >
+            <p>
+              <span className='font-semibold'>Product:</span>{' '}
+              {sale.product_name}
+            </p>
+            <p>
+              <span className='font-semibold'>Quantity:</span> {sale.quantity}
+            </p>
+            <p>
+              <span className='font-semibold'>Total Price:</span> $
+              {Number(sale.total_price).toFixed(2)}
+            </p>
+            <p>
+              <span className='font-semibold'>Sale Date:</span>{' '}
+              {new Date(sale.sale_date).toLocaleDateString('en-CA')}
+            </p>
+          </div>
+        ))}
+        {filteredSales.length > 0 && (
+          <div className='text-right font-semibold text-sm mt-2'>
+            Total Revenue: ${totalRevenue.toFixed(2)}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

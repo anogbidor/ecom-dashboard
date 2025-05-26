@@ -10,12 +10,18 @@ import {
   FiCheckCircle,
   FiX,
   FiRefreshCw,
+  FiMenu,
 } from 'react-icons/fi'
 import { motion, AnimatePresence } from 'framer-motion'
 import { NotificationContext } from '../../context/NotificationContext'
 import type { Notification } from '../../types/Notification'
 
-const Navbar = () => {
+interface NavbarProps {
+  toggleSidebar: () => void
+  sidebarOpen: boolean
+}
+
+const Navbar = ({ toggleSidebar, sidebarOpen }: NavbarProps) => {
   const [showModal, setShowModal] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [notifOpen, setNotifOpen] = useState(false)
@@ -104,9 +110,24 @@ const Navbar = () => {
   if (!context) return null
 
   return (
-    <nav className='h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between ml-64 relative z-30'>
+    <nav
+      className={`h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between fixed top-0 ${
+        sidebarOpen ? 'left-64' : 'left-0'
+      } right-0 z-30 transition-all duration-300`}
+    >
+      {/* Mobile menu button */}
+      <button
+        type='button'
+        title='Open sidebar'
+        onClick={toggleSidebar}
+        className='md:hidden p-2 rounded-md text-gray-500 hover:bg-gray-100 focus:outline-none'
+      >
+        <FiMenu className='h-6 w-6' />
+      </button>
+
+      {/* Welcome message */}
       <motion.h2
-        className='text-lg font-semibold text-gray-800'
+        className='text-lg font-semibold text-gray-800 md:ml-0 hidden md:block mx-auto md:mx-0'
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
@@ -114,6 +135,7 @@ const Navbar = () => {
         Welcome back{user ? `, ${user.name}` : ''}!
       </motion.h2>
 
+      {/* Right side controls */}
       <div className='flex items-center space-x-4 relative' ref={dropdownRef}>
         <button
           title='Notifications'
@@ -157,6 +179,7 @@ const Navbar = () => {
                   </button>
                   {unreadCount > 0 && (
                     <button
+                      type='button'
                       onClick={markAllAsRead}
                       className='p-1 text-blue-500 hover:text-blue-700 rounded hover:bg-blue-50 text-xs'
                     >
@@ -267,7 +290,7 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.2 }}
-              className='absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-xl z-20 overflow-hidden'
+              className='absolute right-0 mt-6 w-56 bg-white border border-gray-200 rounded-lg shadow-xl z-20 overflow-hidden'
             >
               <div className='px-4 py-3 border-b border-gray-100 bg-gray-50'>
                 <p className='text-sm font-medium text-gray-900 truncate'>
