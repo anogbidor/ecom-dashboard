@@ -77,10 +77,10 @@ const Login = () => {
 
         <form onSubmit={handleLogin} className='space-y-4'>
           <div className='space-y-1'>
-            <label className='text-sm font-medium text-gray-700'>Email</label>
+            <label className='text-sm font-medium text-gray-700'>Username or Email</label>
             <input
-              type='email'
-              placeholder='admin@example.com'
+              type='text'
+              placeholder='Enter your username or email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition hover:border-gray-300'
