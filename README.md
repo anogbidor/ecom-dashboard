@@ -106,50 +106,58 @@ Then visit http://localhost:5173
 ✨ Features
 
 ✅ Phase 1: UI & Layout
-*Responsive layout with sidebar and navbar
-*Stat cards for key metrics
-*Clean dashboard with TailwindCSS
+•Responsive layout with sidebar and navbar
+•Stat cards for key metrics
+•Clean dashboard with TailwindCSS
 
 ✅ Phase 2: Inventory & Customer Tables
-*Customer list with join date, email, location
-*Inventory tracking with filtering, sorting, and quantity alerts
+•Customer list with join date, email, location
+•Inventory tracking with filtering, sorting, and quantity alerts
 
 ✅ Phase 3: Sales Module
-*Sales table with date filtering, search, sorting
-*Total revenue calculation
-*Print-friendly view
+•Sales table with date filtering, search, sorting
+•Total revenue calculation
+•Print-friendly view
 
 ✅ Phase 4: Forecasting & Analytics
-*Python-powered 7-day sales forecast
-*Combined sales trend + forecast chart
-*Top products chart (by revenue & quantity)
-*Low stock alert table
-*KPI metrics powered by live data
+•Python-powered 7-day sales forecast
+•Combined sales trend + forecast chart
+•Top products chart (by revenue & quantity)
+•Low stock alert table
+•KPI metrics powered by live data
 
 ✅ Phase 5: Authentication
-*JWT-based login system with protected routes
-*Conditional routing and token storage
-*Logout modal with confirmation + keyboard escape support
+•JWT-based login system with protected routes
+•Conditional routing and token storage
+•Logout modal with confirmation + keyboard escape support
 
 ✅ Phase 6: Add Product & Sale Forms
-* Add product form with SKU, stock, and validation
-* Add sale form with auto-calculated total based on product price and quantity
-* Inventory updates automatically when sale is recorded
-* Toast notifications, animations, and error handling for better UX
-* Dynamic dropdown of inventory products for sale
-* Real-time form validation and feedback using react-hot-toast
+•Add product form with SKU, stock, and validation
+•Add sale form with auto-calculated total
+•Inventory updates automatically when sale is recorded
+•Real-time validation, toasts, and animated feedback
 
+✅ Phase 7: Password Reset
+•Forgot password with secure token generation
+•Reset password page and backend validation
+•Reset token expiration system
+•Admin-only route protection for sensitive actions
 
-✅ Phase 7: Password Reset 
-*Forgot password flow with secure token generation
-*Reset password page with confirmation
-*Admin table with hashed passwords
-*Reset token table with expiration handling
+✅ Phase 8: Account Settings
+•Change username and password securely
+•Modal-based confirmation and live feedback
+•Role-protected route for account management
+•Real-time update with JWT refresh
 
+✅ Phase 9: Role-Based Access Control & User Management 🆕
+•🔐 Admin/staff role system (assigned on user creation)
+•👥 Add user modal (only visible to admins)
+•🧾 Role-based route protection using middleware
+•🗂 Sidebar links dynamically rendered by role
+•👤 Admins only can add/remove users
+•👥 Customers table: add/remove via modals (full CRUD)
+•🧑‍💻 Admin and staff have separate permissions across app
 
-✅ Phase 8: Password Reset (NEW)
-*🧾 Admin account settings (change username/password)
-*✉️ in app  notification alerts for new sales and username  and password updates
 ---
 
 ## 🧠 Coming Soon
