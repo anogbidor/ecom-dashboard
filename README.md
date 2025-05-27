@@ -27,11 +27,14 @@ e-commerce-dashboard/
 │   ├── src/
 │   │   ├── assets/
 │   │   ├── components/
-│   │   │   ├── layout/                 # Navbar, Sidebar, etc.
+│   │   │   ├── layout/                 # Navbar, Sidebar, DashboardLayout
 │   │   │   ├── cards/                  # Stat/KPI Cards
-│   │   │   ├── charts/                 # Chart.js visualizations
+│   │   │   ├── charts/                 # SalesChart, KpiStats, TopProductsChart
+│   │   │   ├── tables/                 # InventoryTable, SalesTable, CustomerTable
 │   │   │   ├── forms/                  # AddProductForm, AddSaleForm
-│   │   │   └── tables/                 # InventoryTable, SalesTable, etc.
+│   │   │   └── common/                 # AddUserModal, AddCustomerModal, DeleteCustomerModal
+│   │   ├── context/
+│   │   │   └── NotificationContext.tsx
 │   │   ├── pages/
 │   │   │   ├── Dashboard.tsx
 │   │   │   ├── Sales.tsx
@@ -41,37 +44,49 @@ e-commerce-dashboard/
 │   │   │   ├── AddProduct.tsx
 │   │   │   ├── AddSale.tsx
 │   │   │   ├── Login.tsx
-│   │   │   ├── ForgotPassword.tsx      # 🔐 Request reset token
-│   │   │   └── ResetPassword.tsx       # 🔐 Enter new password
+│   │   │   ├── ForgotPassword.tsx
+│   │   │   ├── ResetPassword.tsx
+│   │   │   └── AccountSettings.tsx
 │   │   ├── routes/
-│   │   │   └── PrivateRoute.tsx
+│   │   │   ├── PrivateRoute.tsx        # Role-based route protection
+│   │   │   └── RoleGuard.tsx           # Conditional access by user role
+│   │   ├── utils/
+│   │   │   └── authHelpers.ts          # Token and role helpers
 │   │   ├── App.tsx
 │   │   └── main.tsx
 │   └── tailwind.config.js
 │
 ├── server/                             # Node.js backend API
 │   ├── db/
-│   │   └── connection.js               # MySQL DB connection
-│   ├── controllers/                    # Controller logic
-│   │   ├── salesController.js
-│   │   ├── inventoryController.js
+│   │   └── connection.js
+│   ├── controllers/
+│   │   ├── authController.js
 │   │   ├── customersController.js
+│   │   ├── inventoryController.js
 │   │   ├── kpiController.js
 │   │   ├── productsController.js
-│   │   └── authController.js           # 🔐 Login + Reset logic
-│   ├── routes/                         # Express routes
-│   │   ├── sales.js
-│   │   ├── inventory.js
+│   │   └── salesController.js
+│   ├── routes/
+│   │   ├── auth.js
 │   │   ├── customers.js
+│   │   ├── inventory.js
 │   │   ├── kpis.js
 │   │   ├── products.js
-│   │   └── auth.js                     # 🔐 Auth routes (login/reset)
+│   │   └── sales.js
+│   ├── middleware/
+│   │   ├── verifyToken.js
+│   │   ├── verifyRole.js
+│   │   └── verifyAdmin.js
+│   ├── models/
+│   │   ├── User.js
+│   │   ├── ResetToken.js
+│   │   └── Notification.js
 │   ├── utils/
-│   │   └── hashPassword.js             # 🔒 Admin password hasher
-│   └── server.js                       # Express app entry
+│   │   └── hashPassword.js
+│   └── server.js
 │
-├── forecast_sales.py                   # Python Flask API for sales forecasting
-├── .env                                # Backend environment variables
+├── forecast_sales.py                   # Python Flask API for 7-day forecast
+├── .env                                # Backend env variables
 └── README.md
 ```
 
