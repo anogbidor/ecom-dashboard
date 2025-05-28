@@ -175,13 +175,6 @@ Then visit http://localhost:5173
 
 ---
 
-## 🧠 Coming Soon
-
-*📈 Export dashboard to CSV/PDF
-*🤖 Advanced ML forecasting & anomaly detection
-*🔄 Live sync with external APIs (Shopify, WooCommerce)
-
----
 
 🧠 Business Logic
 •Admin login system with JWT-based auth.
@@ -194,6 +187,15 @@ Then visit http://localhost:5173
 •Notification system for key admin actions.
 •Account settings for username/password updates.
 
+## 🧠 Coming Soon
 
----
+*📈 Export dashboard to CSV/PDF
+*🤖 Advanced ML forecasting & anomaly detection
+*🔄 Live sync with external APIs (Shopify, WooCommerce)
+
+
+
+
+
+
 
