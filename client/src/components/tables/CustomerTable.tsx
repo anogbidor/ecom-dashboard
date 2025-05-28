@@ -100,7 +100,7 @@ const CustomerTable = () => {
         <div className='flex flex-col xs:flex-row gap-2 w-full sm:w-auto'>
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className='flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-sm'
+            className='flex items-center justify-center gap-2 px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg transition-colors shadow-sm'
           >
             <FiPlus className='text-lg' />
             Add Customer
@@ -207,6 +207,7 @@ const CustomerTable = () => {
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
                   <button
+                    
                     onClick={() => {
                       setSelectedCustomer(customer)
                       setIsDeleteModalOpen(true)

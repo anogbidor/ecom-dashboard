@@ -126,7 +126,7 @@ const Sidebar = ({ className = '' }: SidebarProps) => {
       {/* Footer */}
       <div className='absolute bottom-6 left-6 right-6 border-t border-gray-700 pt-4'>
         <div className='flex items-center gap-3'>
-          <div className='w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center'>
+          <div className='w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center'>
             <span className='text-sm font-semibold'>{initials}</span>
           </div>
           <div>

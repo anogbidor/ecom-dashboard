@@ -7,6 +7,7 @@ import {
   CategoryScale,
   LinearScale,
   Tooltip,
+  Filler,
   Legend,
   Title,
 } from 'chart.js'
@@ -18,6 +19,7 @@ ChartJS.register(
   PointElement,
   CategoryScale,
   LinearScale,
+  Filler,
   Tooltip,
   Legend,
   Title

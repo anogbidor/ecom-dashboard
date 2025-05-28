@@ -76,7 +76,7 @@ const InventoryTable = () => {
         <button
           type='button'
           onClick={handlePrint}
-          className='bg-gray-600 text-white px-3 py-1 rounded hover:bg-gray-700 self-end sm:self-auto'
+          className='bg-teal-600 text-white px-3 py-1 rounded hover:bg-teal-700 self-end sm:self-auto'
         >
           Print
         </button>

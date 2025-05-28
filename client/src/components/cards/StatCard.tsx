@@ -8,7 +8,7 @@ const StatCard = ({ title, value, icon }: StatCardProps) => {
   return (
     <div className='bg-white rounded-lg shadow p-4 sm:p-6 flex items-center gap-3 sm:gap-5 w-full'>
       {icon && (
-        <div className='text-xl sm:text-2xl text-gray-600' aria-hidden='true'>
+        <div className='text-xl sm:text-2xl text-blue-600' aria-hidden='true'>
           {icon}
         </div>
       )}
