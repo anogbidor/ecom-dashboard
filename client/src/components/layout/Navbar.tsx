@@ -29,8 +29,18 @@ const Navbar = ({ toggleSidebar, sidebarOpen }: NavbarProps) => {
   const [user, setUser] = useState<{ name: string; email?: string } | null>(
     null
   )
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const context = useContext(NotificationContext)
   const notifications = context?.notifications || []
@@ -109,6 +119,11 @@ const Navbar = ({ toggleSidebar, sidebarOpen }: NavbarProps) => {
 
   if (!context) return null
 
+  const formatDate = (value: string) => {
+    const date = new Date(value)
+    return isNaN(date.getTime()) ? 'Invalid date' : date.toLocaleTimeString()
+  }
+
   return (
     <nav
       className={`h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between fixed top-0 ${
@@ -124,16 +139,28 @@ const Navbar = ({ toggleSidebar, sidebarOpen }: NavbarProps) => {
       >
         <FiMenu className='h-6 w-6' />
       </button>
-
-      {/* Welcome message */}
-      <motion.h2
-        className='text-lg font-semibold text-gray-800 md:ml-0 hidden md:block mx-auto md:mx-0'
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        Welcome back{user ? `, ${user.name}` : ''}!
-      </motion.h2>
+      {/* Logo */}
+      <div className='flex items-center gap-2'>
+        <img
+          src='/shoppora-icon.png'
+          alt='Shoppora Logo'
+          className='h-10 w-auto'
+        />
+        <span className='text-xl font-bold text-teal-600 hidden sm:inline'>
+          Shoppora
+        </span>
+      </div>
+      {/* Welcome message - only shown when window width is >= 1000px */}
+      {windowWidth >= 1000 && (
+        <motion.h2
+          className='text-lg font-semibold text-gray-800 md:ml-0 hidden md:block mx-auto md:mx-0'
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          Welcome back{user ? `, ${user.name}` : ''}!
+        </motion.h2>
+      )}
 
       {/* Right side controls */}
       <div className='flex items-center space-x-4 relative' ref={dropdownRef}>
@@ -231,7 +258,7 @@ const Navbar = ({ toggleSidebar, sidebarOpen }: NavbarProps) => {
                         </p>
                         <div className='flex justify-between items-center mt-1'>
                           <span className='text-xs text-gray-400'>
-                            {new Date(n.created_at).toLocaleTimeString()}
+                            {formatDate(n.created_at)}
                           </span>
                           {!n.is_read && (
                             <button
@@ -262,7 +289,7 @@ const Navbar = ({ toggleSidebar, sidebarOpen }: NavbarProps) => {
               dropdownOpen ? 'bg-gray-100' : 'hover:bg-gray-100'
             }`}
           >
-            <div className='w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-sm font-bold text-white'>
+            <div className='w-8 h-8 rounded-full bg-teal-600 flex items-center justify-center text-sm font-bold text-white'>
               {user.name.charAt(0).toUpperCase()}
             </div>
             <div className='text-left hidden md:block'>

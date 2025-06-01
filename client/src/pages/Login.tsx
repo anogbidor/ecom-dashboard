@@ -49,22 +49,15 @@ const Login = () => {
     <div className='min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4'>
       <div className='bg-white/90 backdrop-blur-sm shadow-2xl rounded-2xl p-8 w-full max-w-md space-y-6 border border-white/20 transition-all hover:shadow-lg hover:-translate-y-1'>
         <div className='text-center space-y-2'>
-          <div className='animate-[bounce_1s_ease-in-out_infinite]'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-12 w-12 mx-auto text-blue-600'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4'
-              />
-            </svg>
+          {/* Enhanced logo with bounce animation - larger icon in same circle */}
+          <div className='animate-[bounce_1s_ease-in-out_infinite] mx-auto mb-4 w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-md p-1'>
+            <img
+              src='/shoppora-icon.png'
+              alt='Shoppora Logo'
+              className='h-16 w-auto object-contain' // Larger icon with proper containment
+            />
           </div>
+
           <h1 className='text-3xl font-bold text-gray-800'>Welcome Back</h1>
           <p className='text-gray-600 text-sm'>Admin Dashboard Login</p>
         </div>
@@ -77,13 +70,15 @@ const Login = () => {
 
         <form onSubmit={handleLogin} className='space-y-4'>
           <div className='space-y-1'>
-            <label className='text-sm font-medium text-gray-700'>Username or Email</label>
+            <label className='text-sm font-medium text-gray-700'>
+              Username or Email
+            </label>
             <input
               type='text'
               placeholder='Enter your username or email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition hover:border-gray-300'
+              className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition hover:border-gray-300'
               required
             />
           </div>
@@ -97,7 +92,7 @@ const Login = () => {
               placeholder='••••••••'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition hover:border-gray-300'
+              className='w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition hover:border-gray-300'
               required
             />
           </div>
@@ -110,7 +105,7 @@ const Login = () => {
                 type='checkbox'
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className='h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded'
+                className='h-4 w-4 bg-teal-600 text-teal-600 focus:ring-teal-500 border-gray-300 rounded '
               />
               <label
                 htmlFor='remember-me'
@@ -121,7 +116,7 @@ const Login = () => {
             </div>
             <a
               href='/forgot-password'
-              className='text-sm text-blue-600 hover:underline hover:text-blue-700 transition-colors'
+              className='text-sm text-teal-600 hover:underline hover:text-teal-700 transition-colors'
             >
               Forgot password?
             </a>
@@ -130,7 +125,7 @@ const Login = () => {
           <button
             type='submit'
             disabled={isLoading}
-            className={`w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg transition-all flex items-center justify-center ${
+            className={`w-full bg-teal-600 hover:bg-teal-700 text-white py-3 px-4 rounded-lg transition-all flex items-center justify-center ${
               isLoading ? 'opacity-80 cursor-not-allowed' : 'hover:shadow-md'
             }`}
           >

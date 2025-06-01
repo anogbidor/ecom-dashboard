@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { FiAlertTriangle } from 'react-icons/fi'
+
 type InventoryItem = {
   id: number
   product_name: string
@@ -47,7 +49,10 @@ const LowStockTable = () => {
                 <td className='py-2 px-4'>{item.product_name}</td>
                 <td className='py-2 px-4'>{item.sku}</td>
                 <td className='py-2 px-4 text-red-600 font-semibold'>
-                  {item.quantity_in_stock} ⚠️
+                  <span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800'>
+                                              <FiAlertTriangle className='mr-1' />
+                                              {item.quantity_in_stock} (Low)
+                                            </span>
                 </td>
                 <td className='py-2 px-4'>
                   {new Date(item.date_added).toISOString().slice(0, 10)}

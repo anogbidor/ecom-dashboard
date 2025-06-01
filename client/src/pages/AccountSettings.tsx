@@ -100,21 +100,21 @@ const AccountSettings = () => {
       <div className='max-w-3xl mx-auto'>
         <Link
           to='/dashboard'
-          className='inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors mb-6'
+          className='inline-flex items-center text-teal-600 hover:text-teal-800 transition-colors mb-6'
         >
           <FiArrowLeft className='mr-2' />
           <span className='font-medium'>Back to Dashboard</span>
         </Link>
 
         <div className='bg-white rounded-2xl shadow-xl overflow-hidden'>
-          <div className='bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white'>
+          <div className='bg-teal-600 p-6 text-white'>
             <div className='flex items-center'>
               <div className='w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-2xl font-bold mr-4 border-2 border-white/30'>
                 {user.name?.charAt(0).toUpperCase() || 'A'}
               </div>
               <div>
                 <h2 className='text-2xl font-bold'>Account Settings</h2>
-                <p className='text-blue-100'>
+                <p className='text-white/80'>
                   {user.email || 'user@example.com'}
                 </p>
               </div>
@@ -145,7 +145,7 @@ const AccountSettings = () => {
                       type='text'
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      className='block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition'
+                      className='block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition'
                       placeholder='Enter new username'
                     />
                   </div>
@@ -157,7 +157,7 @@ const AccountSettings = () => {
                   className={`w-full flex justify-center items-center py-3 px-4 rounded-lg transition-all ${
                     loadingUsername || username === user.name
                       ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                      : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-md'
+                      : 'bg-teal-600 hover:bg-teal-700 text-white hover:shadow-md'
                   }`}
                 >
                   {loadingUsername ? (
