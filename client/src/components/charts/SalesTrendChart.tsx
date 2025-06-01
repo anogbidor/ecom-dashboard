@@ -10,7 +10,7 @@ import {
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
 import type { ChartData, ChartOptions } from 'chart.js'
-import { FiCalendar } from 'react-icons/fi'
+import { FiTrendingUp } from 'react-icons/fi'
 
 ChartJS.register(
   LineElement,
@@ -21,19 +21,15 @@ ChartJS.register(
   Legend
 )
 
-// Define types for your API response data
 interface SalesData {
   date: string
   total: number
 }
 
-interface ForecastData {
-  date: string
-  forecast: number
-}
-
-const SalesTrendChart = () => {
+const SalesChart = () => {
   const [chartData, setChartData] = useState<ChartData<'line'> | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const options: ChartOptions<'line'> = {
     responsive: true,
@@ -41,14 +37,59 @@ const SalesTrendChart = () => {
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          font: {
+            size: 14,
+            family: 'Inter, sans-serif',
+          },
+          padding: 20,
+          usePointStyle: true,
+          pointStyle: 'circle',
+        },
+      },
+      tooltip: {
+        backgroundColor: '#1E293B',
+        titleFont: {
+          size: 16,
+          family: 'Inter, sans-serif',
+        },
+        bodyFont: {
+          size: 14,
+          family: 'Inter, sans-serif',
+        },
+        padding: 12,
+        usePointStyle: true,
+        displayColors: false,
       },
     },
     scales: {
       x: {
-        ticks: {
-          maxRotation: 45,
-          minRotation: 0,
+        grid: {
+          display: false,
         },
+        ticks: {
+          font: {
+            family: 'Inter, sans-serif',
+          },
+        },
+      },
+      y: {
+        grid: {
+          color: '#E2E8F0',
+        },
+        ticks: {
+          font: {
+            family: 'Inter, sans-serif',
+          },
+          callback: (value) => `$${value}`,
+        },
+      },
+    },
+    elements: {
+      point: {
+        radius: 4,
+        hoverRadius: 6,
+        backgroundColor: '#3B82F6',
       },
     },
   }
@@ -56,47 +97,29 @@ const SalesTrendChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resSales = await fetch('/api/sales/trends')
-        const resForecast = await fetch('http://localhost:5001/api/forecast')
+        const res = await fetch('/api/sales/trends')
 
-        if (!resSales.ok || !resForecast.ok) {
-          throw new Error('Failed to fetch data')
+        if (!res.ok) {
+          throw new Error('Failed to fetch sales data')
         }
 
-        const actual: SalesData[] = await resSales.json()
-        const forecast: ForecastData[] = await resForecast.json()
-
-        const allDates = [
-          ...actual.map((item) =>
-            new Date(item.date).toISOString().slice(0, 10)
-          ),
-          ...forecast.map((item) => item.date),
-        ]
+        const salesData: SalesData[] = await res.json()
 
         const formatted: ChartData<'line'> = {
-          labels: allDates,
+          labels: salesData.map((item) =>
+            new Date(item.date).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+            })
+          ),
           datasets: [
             {
-              label: 'Actual Sales ($)',
-              data: [
-                ...actual.map((item) => item.total),
-                ...new Array(forecast.length).fill(null),
-              ],
-              borderColor: 'rgb(59, 130, 246)',
+              label: 'Sales ($)',
+              data: salesData.map((item) => item.total),
+              borderColor: '#3B82F6',
               backgroundColor: 'rgba(59, 130, 246, 0.1)',
-              tension: 0.4,
-              fill: true,
-            },
-            {
-              label: 'Forecasted Sales ($)',
-              data: [
-                ...new Array(actual.length).fill(null),
-                ...forecast.map((item) => item.forecast),
-              ],
-              borderColor: 'rgb(234, 179, 8)',
-              backgroundColor: 'rgba(234, 179, 8, 0.1)',
-              borderDash: [5, 5],
-              tension: 0.4,
+              tension: 0.3,
+              borderWidth: 3,
               fill: true,
             },
           ],
@@ -105,25 +128,49 @@ const SalesTrendChart = () => {
         setChartData(formatted)
       } catch (err) {
         console.error('Error loading chart data:', err)
+        setError('Failed to load sales data. Please try again later.')
+      } finally {
+        setIsLoading(false)
       }
     }
 
     fetchData()
   }, [])
 
-  if (!chartData) return <p>Loading sales trends...</p>
+  if (isLoading) {
+    return (
+      <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-100 w-full h-[400px] flex items-center justify-center'>
+        <div className='animate-pulse text-gray-500'>Loading sales data...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-100 w-full h-[400px] flex items-center justify-center'>
+        <div className='text-red-500'>{error}</div>
+      </div>
+    )
+  }
 
   return (
-    <div className='bg-white p-4 rounded shadow w-full h-[300px] sm:h-[400px] md:h-[500px]'>
-      <h2 className='text-xl font-bold text-gray-900 flex items-center mb-3 gap-2'>
-        <span className='bg-blue-100 text-blue-600 p-2 rounded-lg'>
-          <FiCalendar />
-        </span>
-        Sales Trends & Forecast
-      </h2>
-      <Line data={chartData} options={options} />
+    <div className='bg-white p-6 rounded-xl shadow-sm border border-gray-100 w-full h-[500px]'>
+      <div className='flex items-center justify-between mb-6'>
+        <h2 className='text-xl font-semibold text-gray-800 flex items-center gap-3'>
+          <span className='bg-blue-100 text-blue-600 p-2 rounded-lg'>
+            <FiTrendingUp size={20} />
+          </span>
+          Sales Trends
+        </h2>
+        <div className='text-sm text-gray-500'>
+          Last updated: {new Date().toLocaleDateString()}
+        </div>
+      </div>
+      <div className='h-[calc(100%-60px)]'>
+        {chartData && <Line data={chartData} options={options} />}
+      </div>
     </div>
   )
 }
 
-export default SalesTrendChart
+export default SalesChart

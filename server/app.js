@@ -7,7 +7,7 @@ import customersRoutes from './routes/customers.js'
 import inventoryRoutes from './routes/inventory.js'
 import kpiRoutes from './routes/kpis.js'
 import authRoutes from './routes/auth.js'
-import productRoutes from './routes/products.js'
+
 import accountRoutes from './routes/account.js'
 import notificationsRoutes from './routes/notifications.js'
 
@@ -36,7 +36,7 @@ app.use('/api/sales', salesRoutes)
 app.use('/api/customers', customersRoutes)
 app.use('/api/inventory', inventoryRoutes)
 app.use('/api/kpis', kpiRoutes)
-app.use('/api/products', productRoutes)
+
 app.use('/api/auth', authRoutes)
 app.use('/api/account', accountRoutes)
 app.use('/api/notifications', notificationsRoutes)

@@ -3,7 +3,23 @@ import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { motion } from 'framer-motion'
 import { FiPlusSquare } from 'react-icons/fi'
+import ProductConflictModal from './ProductConflictModal' // Import the modal
 
+
+
+export interface ConflictData {
+  show: boolean
+  product: Product | null
+}
+
+
+interface Product {
+  product_name: string
+  sku: string
+  price: number
+  quantity_in_stock: number
+  description: string
+}
 const AddProductForm = () => {
   const navigate = useNavigate()
   const [form, setForm] = useState({
@@ -15,6 +31,10 @@ const AddProductForm = () => {
   })
 
   const [submitting, setSubmitting] = useState(false)
+  const [conflictData, setConflictData] = useState({
+    show: false,
+    product: null as Product | null,
+  })
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -42,23 +62,48 @@ const AddProductForm = () => {
     }
 
     try {
-      const res = await fetch('/api/products', {
+      const res = await fetch('/api/inventory', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       })
 
-      const text = await res.text()
-      const data = text ? JSON.parse(text) : {}
+      const data = await res.json()
 
-      if (!res.ok) throw new Error(data.error || 'Failed to add product')
+      if (!res.ok) {
+        if (res.status === 409 && data.existingProduct) {
+          // 🎯 Friendly field-specific error message
+          if (data.conflictField === 'product_name') {
+            toast.error('A product with this name already exists.', {
+              position: 'top-center',
+            })
+          } else if (data.conflictField === 'sku') {
+            toast.error(
+              'This SKU is already in use. Please use a unique SKU.',
+              {
+                position: 'top-center',
+              }
+            )
+          } else {
+            toast.error('Product conflict detected.', {
+              position: 'top-center',
+            })
+          }
+
+          // Still trigger modal to let user update instead
+          setConflictData({ show: true, product: data.existingProduct })
+          return
+        }
+
+        // Catch all other errors
+        throw new Error(data.error || 'Failed to add product')
+      }
 
       toast.success('Product added successfully!', {
         position: 'top-center',
         duration: 1000,
       })
 
-      // Redirect to inventory page after success
       setTimeout(() => navigate('/inventory'), 1200)
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -221,6 +266,19 @@ const AddProductForm = () => {
           </motion.button>
         </div>
       </form>
+
+      {/* Add Conflict Modal */}
+      {conflictData.show && conflictData.product && (
+        <ProductConflictModal
+          product={conflictData.product}
+          onClose={() => setConflictData({ show: false, product: null })}
+          onUpdated={() => {
+            setConflictData({ show: false, product: null })
+            navigate('/inventory')
+          }}
+          userRole={'admin'} // Replace with actual user role from your auth context
+        />
+      )}
     </motion.div>
   )
 }
