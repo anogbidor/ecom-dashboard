@@ -187,11 +187,11 @@ Then visit http://localhost:5173
 •Notification system for key admin actions.
 •Account settings for username/password updates.
 
-## 🧠 Coming Soon
+# 🧠 Coming Soon
 
-*📈 Export dashboard to CSV/PDF
-*🤖 Advanced ML forecasting & anomaly detection
-*🔄 Live sync with external APIs (Shopify, WooCommerce)
+# *📈 Export dashboard to CSV/PDF
+# *🤖 Advanced ML forecasting & anomaly detection
+# *🔄 Live sync with external APIs (Shopify, WooCommerce)
 
 
 
